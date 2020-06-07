@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      TEST TEST TEST
+      EC2 Instance and NGINX
     </div>
   );
 }
