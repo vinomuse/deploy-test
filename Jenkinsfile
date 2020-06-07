@@ -6,6 +6,8 @@ pipeline {
     stage('build') {
       steps {
         echo 'building the application'
+        sh 'yarn install'
+        sh 'yarn build'
       }
     }
 
