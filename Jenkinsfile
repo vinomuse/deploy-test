@@ -1,7 +1,23 @@
+properties([pipelineTriggers([githubPush()])])
+
 pipeline {
   agent any;
 
   stages {
+
+    // stage('Checkout SCM') {
+    //   steps {
+    //     checkout([
+    //       $class: 'GitSCM',
+    //       branches: [[name: 'master']],
+    //       userRemoteConfigs: [[
+    //         url: 'https://github.com/vinomuse/deploy-test.git',
+    //         credentialsId: '',
+    //       ]]
+    //     ])
+    //   }
+    // }
+
     stage('build') {
       steps {
         echo 'building the application'
