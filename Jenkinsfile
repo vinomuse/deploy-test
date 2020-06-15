@@ -7,12 +7,13 @@ pipeline {
   }
 
   stages {
-
     stage('build') {
       steps {
         echo 'building the application'
-        sh 'yarn'
-        sh 'yarn build'
+        // sh 'yarn'
+        // sh 'yarn build'
+        sh 'npm install'
+        sh 'npm build'
       }
     }
 
