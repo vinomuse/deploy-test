@@ -1,23 +1,12 @@
-properties([pipelineTriggers([githubPush()])])
-properties([pipelineTriggers([githubPush()])])
-
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:10.17.0-alpine' 
+      args '-p 3000:3000' 
+    }
+  }
 
   stages {
-
-    stage('Checkout SCM') {
-      steps {
-        checkout([
-          $class: 'GitSCM',
-          branches: [[name: 'master']],
-          userRemoteConfigs: [[
-            url: 'https://github.com/vinomuse/deploy-test.git',
-            credentialsId: '',
-          ]]
-        ])
-      }
-    }
 
     stage('build') {
       steps {
