@@ -1,3 +1,7 @@
+  
+properties([[$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/hyunil-shin/github_integration/'], 
+pipelineTriggers([githubPush()])]])
+
 pipeline {
   agent any;
 
