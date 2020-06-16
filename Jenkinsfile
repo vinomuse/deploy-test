@@ -1,14 +1,10 @@
-  
-properties([[$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/hyunil-shin/github_integration/'], 
-pipelineTriggers([githubPush()])]])
-
 pipeline {
   agent any;
 
+  triggers {
+    githubPush()
+  }
   stages {
-    triggers {
-      githubPush()
-    }
 
     stage('build') {
       steps {
