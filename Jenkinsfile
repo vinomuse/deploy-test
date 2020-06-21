@@ -7,7 +7,7 @@ pipeline {
   }
 
   environment {
-    CI = 'false'
+    CI = 'true'
   }
 
   stages {
