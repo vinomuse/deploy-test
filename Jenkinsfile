@@ -4,12 +4,22 @@ pipeline {
       image 'node:10-alpine' 
       args '-p 3000:3000' 
     }
-    }
+  }
+
+  environment {
+    CI = 'false'
+  }
+
   stages {
     stage('Build') { 
       steps {
         sh 'node --version' 
         echo 'Hello, world'
+      }
+    }
+    stage('Test') { 
+      steps {
+        echo 'testing the application'
       }
     }
   }
