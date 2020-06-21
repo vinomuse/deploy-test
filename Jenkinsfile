@@ -9,7 +9,7 @@ pipeline {
     stage('Build') { 
       steps {
         sh 'node --version' 
-        sh 'Hello, world'
+        echo 'Hello, world'
       }
     }
   }
