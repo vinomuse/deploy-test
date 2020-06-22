@@ -14,6 +14,7 @@ pipeline{
     stage('deploy') {
       steps {
         sh 'yarn build'
+        echo 'End'
       }
     }
   }
