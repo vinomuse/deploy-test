@@ -18,7 +18,7 @@ pipeline {
         stage('Test') {
             steps {
                 // sh './scripts/test.sh'
-                sh 'testing...'
+                echo 'testing...'
             }
         }
         stage('Deliver') {
