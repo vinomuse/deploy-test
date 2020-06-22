@@ -9,6 +9,8 @@ pipeline{
     stage('build') {
       steps {
         sh 'node --version'
+        sh 'npm --version'
+        sh 'yarn --version'
       }
     }
   }
