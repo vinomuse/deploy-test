@@ -14,7 +14,7 @@ pipeline {
     stage('Build') { 
       steps {
         sh 'node --version' 
-        echo 'Hello, world'
+        echo 'Hello, world 1'
       }
     }
     stage('Test') { 
