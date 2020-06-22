@@ -11,12 +11,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'node --version'
                 sh 'npm install'
             }
         }
         stage('Test') {
             steps {
-                sh './scripts/test.sh'
+                // sh './scripts/test.sh'
+                sh 'testing...'
             }
         }
         stage('Deliver') {
