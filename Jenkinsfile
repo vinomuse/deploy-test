@@ -22,6 +22,13 @@ pipeline {
         echo 'testing the application'
       }
     }
+    stage('Deliver') {
+      steps {
+        sh 'deploy'
+        input message: 'Finished using the web site? (Click "Proceed" to continue)'
+        sh 'end'
+      }
+    }
   }
   // agent {
   //     docker { 
