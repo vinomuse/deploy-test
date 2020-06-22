@@ -24,9 +24,9 @@ pipeline {
     }
     stage('Deliver') {
       steps {
-        sh 'deploy'
+        echo 'deploy'
         input message: 'Finished using the web site? (Click "Proceed" to continue)'
-        sh 'end'
+        echo 'end'
       }
     }
   }
