@@ -6,19 +6,20 @@ pipeline{
   }
 
   stages {
-    stage('build') {
-      steps {
-        sh 'node --version'
-        sh 'yarn --version'
-        sh 'yarn'
-        sh 'yarn build'
-      }
-    }
+    // stage('build') {
+    //   steps {
+    //     sh 'node --version'
+    //     sh 'yarn --version'
+    //     sh 'yarn'
+    //     sh 'yarn build'
+    //   }
+    // }
     stage('archive') {
-      steps{
-        script{
-          zip archive: true, dir: 'build', glob: '', zipFile: 'build.zip'
-        } 
+      steps {
+        sh 'ls -al'
+        // script{
+        //   zip archive: true, dir: 'src', glob: '', zipFile: 'build.zip'
+        // } 
       }
     }
   }
