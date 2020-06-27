@@ -16,8 +16,8 @@ pipeline{
     }
     stage('deploy') {
       steps{
-        sh 'scp ./build'
-        sh 'git --version'
+        sh 'ls -al'
+        sh 'ssh http://ec2-13-209-68-199.ap-northeast-2.compute.amazonaws.com/ rm -rf /var/www/html'
       }
     }
   }
