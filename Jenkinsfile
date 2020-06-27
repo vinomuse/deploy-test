@@ -16,7 +16,8 @@ pipeline{
     }
     stage('deploy') {
       steps{
-        sh 'cd build && ls -al'
+        sh 'scp ./build'
+        sh 'git --version'
       }
     }
   }
