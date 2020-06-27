@@ -5,6 +5,11 @@ pipeline{
     }
   }
 
+  environment {
+    SERVER_IP='15.165.161.155'
+    SERVER_DEPLOY_DIR='/var/www/html'
+  }
+
   stages {
     stage('build') {
       steps {
@@ -20,8 +25,7 @@ pipeline{
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
-        echo 'end'
-        sh 'ls -al'
+        sh './scripts/deploy.sh'
       }
     }
   }
