@@ -25,7 +25,12 @@ pipeline{
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
-        sh 'ls -al'
+        sh '''
+          cd /home
+          ssh -i "my_aws_key.pem" ubuntu@ec2-15-165-161-155.ap-northeast-2.compute.amazonaws.com
+          ls -al
+        '''
+        
       }
     }
   }
