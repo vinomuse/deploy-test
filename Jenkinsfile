@@ -8,13 +8,15 @@ pipeline{
   stages {
     stage('build') {
       steps {
+        sh 'node --version'
+        sh 'yarn --version'
         sh 'yarn'
+        sh 'yarn build'
       }
     }
     stage('deploy') {
-      steps {
-        sh 'yarn build'
-        echo 'End'
+      steps{
+        echo 'deploying...'
       }
     }
   }
