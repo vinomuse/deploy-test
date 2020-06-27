@@ -18,6 +18,7 @@ pipeline{
           tar -cvf build.tar build
           ls -al
         '''
+        archiveArtifacts artifacts: 'build.tar', fingerprint: true
       }
     }
   }
