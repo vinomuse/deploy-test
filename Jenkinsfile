@@ -17,6 +17,13 @@ pipeline{
         archiveArtifacts artifacts: 'build.tar', fingerprint: true
       }
     }
+    stage('Deploy') {
+      steps {
+        unarchive mapping: ['build.tar': 'build.tar']
+        echo 'end'
+        sh 'ls -al'
+      }
+    }
   }
 }
 
