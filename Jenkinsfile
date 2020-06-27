@@ -17,7 +17,7 @@ pipeline{
     stage('archive') {
       steps{
         script{
-          zip archive: true, dir: 'archive', glob: '', zipFile: 'build.zip'
+          zip archive: true, dir: 'build', glob: '', zipFile: 'build.zip'
         } 
       }
     }
