@@ -17,9 +17,9 @@ pipeline{
     stage('archive') {
       steps {
         sh 'ls -al'
-        // script{
-        //   zip archive: true, dir: 'src', glob: '', zipFile: 'build.zip'
-        // } 
+        script{
+          zip archive: true, dir: 'src', glob: '', zipFile: 'build.zip'
+        } 
       }
     }
   }
