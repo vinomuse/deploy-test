@@ -14,9 +14,11 @@ pipeline{
         sh 'yarn build'
       }
     }
-    stage('zip') {
+    stage('archive') {
       steps{
-        sh 'zip archive: true, dir: '/build', glob: '', zipFile: 'archive''
+        script{
+          zip archive: true, dir: 'archive', glob: '', zipFile: 'build.zip'
+        } 
       }
     }
   }
