@@ -25,7 +25,7 @@ pipeline{
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
-        sh './scripts/deploy.sh'
+        sh './jenkins/scripts/deploy.sh'
       }
     }
   }
