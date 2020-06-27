@@ -14,11 +14,15 @@ pipeline{
         sh 'yarn build'
       }
     }
-    stage('deploy') {
+    stage('zip') {
       steps{
-        sh 'ls -al'
-        sh 'ssh http://ec2-13-209-68-199.ap-northeast-2.compute.amazonaws.com/ rm -rf /var/www/html'
+        sh 'zip archive: true, dir: '/build', glob: '', zipFile: 'archive''
       }
     }
   }
 }
+
+1. 압축을 한다.
+2. ec2 hook을 걸어준다. (빌드 다 되고 압축이 다 되면 noti를 주는 훅을 만든다.)
+
+
