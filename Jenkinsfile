@@ -25,7 +25,9 @@ pipeline{
 
     stage('Deploy') {
       steps {
+        echo '--- deploy ---'
         unarchive mapping: ['build.tar': 'build.tar']
+        echo '--- deploy ---'
         // echo '--- Deploy ---'
         // sshagent(['webserver-ssh-access']) {
         //   sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
