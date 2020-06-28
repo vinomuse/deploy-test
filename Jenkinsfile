@@ -7,31 +7,31 @@ pipeline{
 
   environment {
     SERVER_IP='15.164.165.35'
-    SERVER_DEPLOY_DIR='/var/www/html'
+    SERVER_DEPLOY_DIR='/var/www/html/'
   }
 
   stages {
-    // stage('build') {
-    //   steps {
-    //     sh '''
-    //       yarn
-    //       yarn build
-    //       tar -cvf build.tar build
-    //       ls -al
-    //     '''
-    //     archiveArtifacts artifacts: 'build.tar', fingerprint: true
-    //   }
-    // }
+    stage('build') {
+      steps {
+        sh '''
+          yarn
+          yarn build
+          tar -cvf build.tar build
+          ls -al
+        '''
+        archiveArtifacts artifacts: 'build.tar', fingerprint: true
+      }
+    }
     stage('Deploy') {
       agent {
         label 'master'
       }
       steps {
         echo 'deploy'
-        // unarchive mapping: ['build.tar': 'build.tar']
+        unarchive mapping: ['build.tar': 'build.tar']
         sshagent(['webserver-ssh-access']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-164-165-35.ap-northeast-2.compute.amazonaws.com'
-          sh 'ls -al'
+          sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
         }
       }
     }
