@@ -30,7 +30,7 @@ pipeline{
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
-        sshagent(credentials: ['webserver-ssh-key']) {
+        sshagent(credentials: ['1354b2a8-3826-4a35-9655-3268fa0480bc']) {
           sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
           sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
         }
