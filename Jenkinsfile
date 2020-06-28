@@ -15,7 +15,7 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
-          yarns
+          yarn
           yarn build
           tar -cvf build.tar build
           ls -al
