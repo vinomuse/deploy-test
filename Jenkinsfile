@@ -29,6 +29,9 @@ pipeline{
       }
     }
     stage('Deploy') {
+      agent {
+        label 'master'
+      }
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy ---'
