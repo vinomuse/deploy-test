@@ -6,7 +6,7 @@ pipeline{
   }
 
   environment {
-    SERVER_IP='15.164.165.35'
+    SERVER_IP='13.209.98.130'
     SERVER_DEPLOY_DIR='/var/www/html/'
   }
 
@@ -28,7 +28,7 @@ pipeline{
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
-        sshagent(['webserver-ssh-access']) {
+        sshagent(['webserver-ssh-access1']) {
           sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
           sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
         }
