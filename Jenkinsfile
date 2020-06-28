@@ -1,9 +1,10 @@
 pipeline{
-  agent {
-    docker {
-      image 'node:10-alpine'
-    }
-  }
+  agent none;
+  // agent {
+  //   docker {
+  //     image 'node:10-alpine'
+  //   }
+  // }
 
   environment {
     SERVER_IP='15.164.165.35'
@@ -12,6 +13,11 @@ pipeline{
 
   stages {
     stage('build') {
+      agent {
+        docker {
+          image 'node:10-alpine'
+        }
+      }
       steps {
         sh '''
           yarn
@@ -26,7 +32,7 @@ pipeline{
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy ---'
-        sshagent(['webserver-ssh-access']) {
+        sshagent(credentials: ['webserver-ssh-access']) {
           sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
           sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
         }
