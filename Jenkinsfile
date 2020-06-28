@@ -2,7 +2,7 @@ pipeline{
   agent none
 
   environment {
-    SERVER_IP='13.209.98.130'
+    SERVER_IP='ip-172-31-27-223'
     SERVER_DEPLOY_DIR='/var/www/html/'
   }
 
