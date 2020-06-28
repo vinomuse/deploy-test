@@ -2,7 +2,7 @@ pipeline{
   agent none
 
   environment {
-    SERVER_IP='ec2-13-209-98-130.ap-northeast-2.compute.amazonaws.com'
+    SERVER_IP='13.209.98.130'
     SERVER_DEPLOY_DIR='/var/www/html/'
   }
 
