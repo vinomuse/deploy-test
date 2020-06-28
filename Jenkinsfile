@@ -6,7 +6,7 @@ pipeline{
   }
 
   environment {
-    SERVER_IP='15.165.161.155'
+    SERVER_IP='15.164.165.35'
     SERVER_DEPLOY_DIR='/var/www/html'
   }
 
