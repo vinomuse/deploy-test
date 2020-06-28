@@ -27,7 +27,7 @@ pipeline{
         // unarchive mapping: ['build.tar': 'build.tar']
         sh '''
           ls -al
-          cd ../../../../home
+          cd ../../../../home/node
           ls -al
         '''
         
