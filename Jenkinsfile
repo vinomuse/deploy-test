@@ -1,5 +1,4 @@
 pipeline{
-  agent none;
   agent {
     docker {
       image 'node:10-alpine'
@@ -24,6 +23,7 @@ pipeline{
         archiveArtifacts artifacts: 'build.tar', fingerprint: true
       }
     }
+    
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
