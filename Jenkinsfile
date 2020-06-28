@@ -24,7 +24,7 @@ pipeline{
     // }
     stage('Deploy') {
       steps {
-        unarchive mapping: ['build.tar': 'build.tar']
+        // unarchive mapping: ['build.tar': 'build.tar']
         sh '''
           ls -al
           cd ../../../../
