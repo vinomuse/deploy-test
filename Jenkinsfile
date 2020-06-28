@@ -14,24 +14,23 @@ pipeline{
     stage('build') {
       steps {
         sh 'building...'
-        // sh '''
-        //   yarn
-        //   yarn build
-        //   tar -cvf build.tar build
-        //   ls -al
-        // '''
-        // archiveArtifacts artifacts: 'build.tar', fingerprint: true
+        sh '''
+          yarns
+          yarn build
+          tar -cvf build.tar build
+          ls -al
+        '''
+        archiveArtifacts artifacts: 'build.tar', fingerprint: true
       }
     }
     stage('Deploy') {
       steps {
-        sh 'deploying...'
-        // unarchive mapping: ['build.tar': 'build.tar']
-        // echo '--- Deploy ---'
-        // sshagent(['webserver-ssh-access']) {
-        //   sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
-        //   sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
-        // }
+        unarchive mapping: ['build.tar': 'build.tar']
+        echo '--- Deploy ---'
+        sshagent(['webserver-ssh-access']) {
+          sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
+        }
       }
     }
   }
