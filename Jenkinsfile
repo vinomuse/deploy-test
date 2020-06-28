@@ -2,7 +2,6 @@ pipeline{
   agent {
     docker {
       image 'node:10-alpine'
-      args '-u root:root'
     }
   }
 
@@ -23,15 +22,15 @@ pipeline{
         archiveArtifacts artifacts: 'build.tar', fingerprint: true
       }
     }
-    
+
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
-        echo '--- Deploy ---'
-        sshagent(['webserver-ssh-access']) {
-          sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
-          sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
-        }
+        // echo '--- Deploy ---'
+        // sshagent(['webserver-ssh-access']) {
+        //   sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
+        //   sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
+        // }
       }
     }
   }
