@@ -13,7 +13,7 @@ pipeline{
   stages {
     stage('build') {
       steps {
-        sh 'building...'
+        echo 'Started building'
         sh '''
           yarns
           yarn build
@@ -21,16 +21,18 @@ pipeline{
           ls -al
         '''
         archiveArtifacts artifacts: 'build.tar', fingerprint: true
+        echo 'Finished building'
       }
     }
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
-        echo '--- Deploy ---'
+        echo '--- Deploy start ---'
         sshagent(['webserver-ssh-access']) {
           sh "scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}"
           sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\""
         }
+        echo '--- Deploy end ---'
       }
     }
   }
