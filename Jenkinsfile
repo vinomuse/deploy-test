@@ -11,23 +11,23 @@ pipeline{
   }
 
   stages {
-    stage('build') {
-      steps {
-        sh '''
-          yarn
-          yarn build
-          tar -cvf build.tar build
-          ls -al
-        '''
-        archiveArtifacts artifacts: 'build.tar', fingerprint: true
-      }
-    }
+    // stage('build') {
+    //   steps {
+    //     sh '''
+    //       yarn
+    //       yarn build
+    //       tar -cvf build.tar build
+    //       ls -al
+    //     '''
+    //     archiveArtifacts artifacts: 'build.tar', fingerprint: true
+    //   }
+    // }
     stage('Deploy') {
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         sh '''
           ls -al
-          cd /home
+          cd ../../../../
           ls -al
         '''
         
