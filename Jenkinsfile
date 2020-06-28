@@ -25,11 +25,9 @@ pipeline{
     stage('Deploy') {
       steps {
         // unarchive mapping: ['build.tar': 'build.tar']
-        sh '''
-          ls -al
-          cd ../../../../home/node
-          ls -al
-        '''
+        sshagent(['webserver-ssh-access']) {
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-164-165-35.ap-northeast-2.compute.amazonaws.com'
+        }
         
       }
     }
