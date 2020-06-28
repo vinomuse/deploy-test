@@ -23,11 +23,14 @@ pipeline{
     //   }
     // }
     stage('Deploy') {
-      steps {
-        echo 'deploy'
-        // unarchive mapping: ['build.tar': 'build.tar']
-        sshagent(['webserver-ssh-access']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-164-165-35.ap-northeast-2.compute.amazonaws.com'
+      agent {
+        label 'master'
+        steps {
+          echo 'deploy'
+          // unarchive mapping: ['build.tar': 'build.tar']
+          sshagent(['webserver-ssh-access']) {
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-164-165-35.ap-northeast-2.compute.amazonaws.com'
+          }
         }
       }
     }
