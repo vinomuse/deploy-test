@@ -1,10 +1,11 @@
 pipeline{
   agent none;
-  // agent {
-  //   docker {
-  //     image 'node:10-alpine'
-  //   }
-  // }
+  agent {
+    docker {
+      image 'node:10-alpine'
+      args '-u root:root'
+    }
+  }
 
   environment {
     SERVER_IP='15.164.165.35'
@@ -13,11 +14,6 @@ pipeline{
 
   stages {
     stage('build') {
-      agent {
-        docker {
-          image 'node:10-alpine'
-        }
-      }
       steps {
         sh '''
           yarn
@@ -29,9 +25,6 @@ pipeline{
       }
     }
     stage('Deploy') {
-      agent {
-        label 'master'
-      }
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy ---'
