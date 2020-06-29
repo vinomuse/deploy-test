@@ -35,10 +35,10 @@ pipeline{
         //   sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
         //   sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\"'
         // }
-        git init
-        git commit -m '테스트'
-        git remote add origin https://github.com/vinomuse/deploy-build.git
-        git push -u origin master
+        sh 'git init'
+        sh 'git commit -m "테스트"'
+        sh 'git remote add origin https://github.com/vinomuse/deploy-build.git'
+        sh 'git push -u origin master'
         echo '--- Deploy end ---'
       }
     }
