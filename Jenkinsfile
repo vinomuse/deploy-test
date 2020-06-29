@@ -31,10 +31,14 @@ pipeline{
       steps {
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
-        sshagent(credentials: ['${SERVER_CREDENTIALSID}']) {
-          sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\"'
-        }
+        // sshagent(credentials: ['${SERVER_CREDENTIALSID}']) {
+        //   sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
+        //   sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}build; tar -xvf ${SERVER_DEPLOY_DIR}build.tar -C ${SERVER_DEPLOY_DIR}\"'
+        // }
+        git init
+        git commit -m '테스트'
+        git remote add origin https://github.com/vinomuse/deploy-build.git
+        git push -u origin master
         echo '--- Deploy end ---'
       }
     }
@@ -43,8 +47,7 @@ pipeline{
 
 
 
-// // 1. 압축을 한다.
-// // 2. ec2 hook을 걸어준다. (빌드 다 되고 압축이 다 되면 noti를 주는 훅을 만든다.)
+
 
 
 
