@@ -25,6 +25,7 @@ pipeline{
           yarn
           yarn build
           tar -cvf build_${BUILD_NUMBER}.tar build
+          rm -rf build_${BUILD_NUMBER - 1}.tar
           ls -al
         '''
         archiveArtifacts artifacts: 'build_${BUILD_NUMBER}.tar', fingerprint: true
