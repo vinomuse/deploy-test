@@ -3,7 +3,7 @@ pipeline{
 
   environment {
     SERVER_IP='54.180.107.136'
-    SERVER_DEPLOY_DIR='/var/www/html/'
+    SERVER_DEPLOY_DIR='/var/www/html'
   }
 
   stages {
