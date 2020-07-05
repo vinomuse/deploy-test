@@ -22,7 +22,6 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
-
           yarn
           yarn build
           tar -cvf build_${BUILD_NUMBER}.tar build
