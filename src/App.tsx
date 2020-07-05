@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      EC2 Instance and NGINX and Jenkins 25
+      EC2 Instance and NGINX and Jenkins 26
     </div>
   );
 }

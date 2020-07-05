@@ -54,14 +54,14 @@ pipeline{
 
   }
   post {
-    always {
-      echo 'always'
-    }
+    // always {
+    //   mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'jason0853@gmail.com'
+    // }
     success {
-      echo 'success'
+      mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Success', to: 'jason0853@gmail.com'
     }
     failure {
-      echo 'failure'
+      mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Failure', to: 'jason0853@gmail.com'
     }
   }
 }
