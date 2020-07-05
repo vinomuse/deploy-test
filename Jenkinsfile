@@ -7,11 +7,6 @@ pipeline{
   }
 
   stages {
-    when {
-      expression {
-        BRANCH_NAME == 'master'
-      }
-    }
     stage('build') {
       agent {
         docker {
