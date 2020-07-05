@@ -28,7 +28,7 @@ pipeline{
           ls -al
           rm -rf build_$(($BUILD_NUMBER - 1)).tar
         '''
-        archiveArtifacts artifacts: 'build.tar', fingerprint: true
+        archiveArtifacts artifacts: 'build_${BUILD_NUMBER}.tar', fingerprint: true
         echo 'Finished building'
       }
     }
@@ -46,10 +46,10 @@ pipeline{
     stage('Deploy') {
       agent any
       steps {
-        unarchive mapping: ['build.tar': 'build.tar']
+        unarchive mapping: ['build_${BUILD_NUMBER}.tar': 'build_${BUILD_NUMBER}.tar']
         echo '--- Deploy start ---'
-        sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_.tar -C ${SERVER_DEPLOY_DIR}\"'
+        sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
         echo '--- Deploy end ---'
       }
     }
