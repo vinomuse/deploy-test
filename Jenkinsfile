@@ -8,6 +8,11 @@ pipeline{
 
   stages {
     stage('build') {
+      when {
+        expression {
+          BRANCH_NAME == 'master'
+        }
+      }
       agent {
         docker {
           image 'node:10-alpine'
@@ -16,7 +21,6 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
-          ${BRANCH_NAME}
           yarn
           yarn build
           tar -cvf build.tar build
