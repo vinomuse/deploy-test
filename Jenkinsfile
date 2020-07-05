@@ -49,10 +49,14 @@ pipeline{
         // unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
         sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build_$(($BUILD_NUMBER - 3))'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build_$(($BUILD_NUMBER - 4))'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build_$(($BUILD_NUMBER - 5))'
+        // sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
+        sh '''
+          ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} 
+          rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}
+          rm -rf build_$((BUILD_NUMBER - 3)).tar
+          rm -rf build_$((BUILD_NUMBER - 4)).tar
+          rm -rf build_$((BUILD_NUMBER - 5)).tar
+        '''
         echo '--- Deploy end ---'
       }
     }
