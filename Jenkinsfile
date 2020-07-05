@@ -22,7 +22,7 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
-          rm -rf build_${BUILD_NUMBER - 2} build_${BUILD_NUMBER - 3}
+          rm -rf build_${BUILD_NUMBER - 2}.tar build_${BUILD_NUMBER - 3}.tar
           yarn
           yarn build
           tar -cvf build_${BUILD_NUMBER}.tar build
