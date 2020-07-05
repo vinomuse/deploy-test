@@ -21,51 +21,53 @@ pipeline{
       }
       steps {
         echo 'Started building'
-        sh '''
-          yarn
-          yarn build
-          tar -cvf build_${BUILD_NUMBER}.tar build
-          rm -rf build_${BUILD_NUMBER - 1}.tar
-          ls -al
-        '''
+        sh 'ls -al'
+        sh '${BUILD_NUMBER - 1}'
+        // sh '''
+        //   yarn
+        //   yarn build
+        //   tar -cvf build_${BUILD_NUMBER}.tar build
+        //   rm -rf build_${BUILD_NUMBER - 1}.tar
+        //   ls -al
+        // '''
         archiveArtifacts artifacts: 'build_${BUILD_NUMBER}.tar', fingerprint: true
         echo 'Finished building'
       }
     }
-    stage('Decide') {
-      agent any
-      when {
-        expression {
-          BRANCH_NAME == 'master'
-        }
-      }
-      steps {
-        input message: 'Do you want to deploy to real server? (Click "Proceed" to continue)'
-      }
-    }
-    stage('Deploy') {
-      agent any
-      steps {
-        unarchive mapping: ['build_${BUILD_NUMBER}.tar': 'build_${BUILD_NUMBER}.tar']
-        echo '--- Deploy start ---'
-        sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
-        sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build__${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
-        echo '--- Deploy end ---'
-      }
-    }
+    // stage('Decide') {
+    //   agent any
+    //   when {
+    //     expression {
+    //       BRANCH_NAME == 'master'
+    //     }
+    //   }
+    //   steps {
+    //     input message: 'Do you want to deploy to real server? (Click "Proceed" to continue)'
+    //   }
+    // }
+    // stage('Deploy') {
+    //   agent any
+    //   steps {
+    //     unarchive mapping: ['build_${BUILD_NUMBER}.tar': 'build_${BUILD_NUMBER}.tar']
+    //     echo '--- Deploy start ---'
+    //     sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
+    //     sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build__${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
+    //     echo '--- Deploy end ---'
+    //   }
+    // }
 
   }
-  post {
-    always {
-      emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
-    }
-    success {
-      slackSend (channel: '#general', color: '#00FF00', message: "SUCCESSFUL: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
-    }
-    failure {
-      slackSend (channel: '#general', color: '#FF0000', message: "FAILED: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
-    }
-  }
+  // post {
+  //   always {
+  //     emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
+  //   }
+  //   success {
+  //     slackSend (channel: '#general', color: '#00FF00', message: "SUCCESSFUL: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+  //   }
+  //   failure {
+  //     slackSend (channel: '#general', color: '#FF0000', message: "FAILED: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
+  //   }
+  // }
 }
 
 
