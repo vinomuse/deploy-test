@@ -48,6 +48,13 @@ pipeline{
       steps {
         // unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
+        sh '''
+          if [ -f "build_$((BUILD_NUMBER))" ] ; then
+            echo "file exist"
+          else
+            echo "file not exist"
+          fi
+        '''
         sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build_${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
         echo '--- Deploy end ---'
