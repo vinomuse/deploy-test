@@ -16,6 +16,7 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
+          ${BRANCH_NAME}
           yarn
           yarn build
           tar -cvf build.tar build
@@ -33,6 +34,18 @@ pipeline{
         sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build.tar -C ${SERVER_DEPLOY_DIR}\"'
         echo '--- Deploy end ---'
+      }
+    }
+
+    post {
+      always {
+        echo 'always'
+      }
+      success {
+        echo 'success'
+      }
+      failure {
+        echo 'failure'
       }
     }
   }
