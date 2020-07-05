@@ -21,7 +21,7 @@ pipeline{
       }
       steps {
         echo 'Started building'
-        sh '$BUILD_NUMBER - 1'
+        sh '$BUILD_NUMBER - $1'
         sh '''
           yarn
           yarn build
