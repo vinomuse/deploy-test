@@ -9,7 +9,7 @@ pipeline{
   stages {
     stage('Start Notification') {
       steps {
-        mail bcc: '', body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
+        mail bcc: '', body: 'Started', cc: '', from: '', replyTo: '', subject: 'Started jenkins job on deploy-test', to: 'jason0853@gmail.com'
       }
     }
     stage('Build') {
@@ -54,14 +54,8 @@ pipeline{
 
   }
   post {
-    // always {
-    //   mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'jason0853@gmail.com'
-    // }
-    success {
-      mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Success', to: 'jason0853@gmail.com'
-    }
-    failure {
-      mail bcc: '', body: 'Finished', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Failure', to: 'jason0853@gmail.com'
+    always {
+      emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
     }
   }
 }
