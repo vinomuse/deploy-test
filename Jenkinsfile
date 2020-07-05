@@ -7,12 +7,12 @@ pipeline{
   }
 
   stages {
-    stage('build') {
-      when {
-        expression {
-          BRANCH_NAME == 'master' || BRANCH_NAME == 'dev'
-        }
+    when {
+      expression {
+        BRANCH_NAME == 'master'
       }
+    }
+    stage('build') {
       agent {
         docker {
           image 'node:10-alpine'
