@@ -9,7 +9,7 @@ pipeline{
   stages {
     stage('Start Notification') {
       steps {
-        mail bcc: '', body: 'Started', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'jason0853@gmail.com'
+        mail bcc: '', body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', cc: '', from: '', replyTo: '', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
       }
     }
     stage('Build') {
