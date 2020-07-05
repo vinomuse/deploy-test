@@ -22,7 +22,7 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
-          yar
+          yarn
           yarn build
           tar -cvf build.tar build
           ls -al
