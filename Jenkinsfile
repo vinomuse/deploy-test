@@ -22,6 +22,7 @@ pipeline{
       steps {
         echo 'Started building'
         sh '''
+          rm -rf build_${BUILD_NUMBER - 2} build_${BUILD_NUMBER - 3}
           yarn
           yarn build
           tar -cvf build_${BUILD_NUMBER}.tar build
@@ -45,7 +46,7 @@ pipeline{
     stage('Deploy') {
       agent any
       steps {
-        unarchive mapping: ['build.tar': 'build.tar']
+        unarchive mapping: ['build_${BUILD_NUMBER}.tar': 'build_${BUILD_NUMBER}.tar']
         echo '--- Deploy start ---'
         sh 'scp -o StrictHostKeyChecking=no build_${BUILD_NUMBER}.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
         sh 'ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \"rm -rf ${SERVER_DEPLOY_DIR}/build; tar -xvf ${SERVER_DEPLOY_DIR}/build__${BUILD_NUMBER}.tar -C ${SERVER_DEPLOY_DIR}\"'
