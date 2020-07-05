@@ -21,12 +21,12 @@ pipeline{
       }
       steps {
         echo 'Started building'
-        sh 'expr $BUILD_NUMBER - 1'
         sh '''
           yarn
           yarn build
-          tar -cvf build.tar build
+          tar -cvf build_${BUILD_NUMBER}.tar build
           ls -al
+          rm -rf build_${$(($BUILD_NUMBER - 1))}.tar
         '''
         archiveArtifacts artifacts: 'build.tar', fingerprint: true
         echo 'Finished building'
