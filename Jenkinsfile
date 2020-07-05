@@ -28,6 +28,7 @@ pipeline{
     stage('Deploy') {
       agent any
       steps {
+        input message: 'Do you want to deploy to real server? (Click "Proceed" to continue)'
         unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
         sh 'scp -o StrictHostKeyChecking=no build.tar ubuntu@${SERVER_IP}:${SERVER_DEPLOY_DIR}'
