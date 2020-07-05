@@ -10,6 +10,7 @@ pipeline{
     stage('Start Notification') {
       steps {
         mail bcc: '', body: 'Started', cc: '', from: '', replyTo: '', subject: 'Started jenkins job on deploy-test', to: 'jason0853@gmail.com'
+        slackSend (channel: '#general', color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
     }
     stage('Build') {
@@ -56,6 +57,12 @@ pipeline{
   post {
     always {
       emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jason0853@gmail.com'
+    }
+    success {
+      slackSend (channel: '#general', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    }
+    failure {
+      slackSend (channel: '#general', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
   }
 }
