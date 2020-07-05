@@ -7,6 +7,9 @@ pipeline{
   }
 
   stages {
+    stage('Start Notification') {
+      mail bcc: '', body: 'Started', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'jason0853@gmail.com'
+    }
     stage('build') {
       agent {
         docker {
