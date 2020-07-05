@@ -49,7 +49,7 @@ pipeline{
         // unarchive mapping: ['build.tar': 'build.tar']
         echo '--- Deploy start ---'
         sh '''
-          if [ -f "build_$((BUILD_NUMBER - 2)).tar" ] ; then
+          if [ -f build_$((BUILD_NUMBER - 2)).tar ] ; then
             echo "file exist"
             rm -rf build_$((BUILD_NUMBER - 2)).tar
           else
